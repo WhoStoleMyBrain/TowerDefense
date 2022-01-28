@@ -1,6 +1,6 @@
 import pygame
 
-from settings import Settings
+from ref_settings import Settings
 
 pygame.font.init()
 pygame.mixer.init()
