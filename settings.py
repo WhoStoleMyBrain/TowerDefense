@@ -8,6 +8,7 @@ class GameDefaults:
         self.FPS = 60
         self.WIDTH = 900
         self.HEIGHT = 500
+        self.BREAK = -1
 
 
 class Window:
