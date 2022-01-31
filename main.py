@@ -1,35 +1,58 @@
 import pygame
 import os
+import sys
 
 from settings import GameDefaults, Window
 from eventHandler import EventHandler
 
-gameDefaults = GameDefaults()
-pygame.font.init()
-pygame.mixer.init()
 
-pygame.display.set_caption(gameDefaults.TITLE)
+class Game:
+    def __init__(self):
+        pygame.init()
+        pygame.font.init()
+        pygame.mixer.init()
+        self.gameDefaults = GameDefaults()
+        self.playing = False
+        self.clock = pygame.time.Clock()
+        self.mainWindow = Window()
 
-mainWindow = Window()
+    def mainFrame(self):
+        pass
+
+    def drawWindow(self):
+        self.mainWindow.WIN.fill(self.gameDefaults.BGCOLOR)#WIN.blit(self.mainWindow.SPACE, (0, 0))
+        self.drawGrid()
+        pygame.display.flip()  # Can use pygame.display.update()
 
 
-def draw_window():
-    mainWindow.WIN.blit(mainWindow.SPACE, (0, 0))
-    pygame.display.update()
+    def drawGrid(self):
+        for grid_x in range(self.gameDefaults.TILES_X + 1):
+            x = grid_x * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN
+            self.drawLine((x, self.gameDefaults.MARGIN), (x, self.gameDefaults.HEIGHT - self.gameDefaults.MARGIN))
+
+        for grid_y in range(self.gameDefaults.TILES_Y + 1):
+            y = grid_y * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN
+            self.drawLine((self.gameDefaults.MARGIN, y), (self.gameDefaults.WIDTH - self.gameDefaults.MARGIN, y))
+
+    def drawLine(self, point1, point2):
+        pygame.draw.line(self.mainWindow.WIN, self.gameDefaults.WHITE, point1, point2,
+                         width=self.gameDefaults.GRIDWIDTH)
+
 
 
 def main():
+    game = Game()
     clock = pygame.time.Clock()
-    eventHandler = EventHandler()
-    run = True
-    while run:
-        clock.tick(gameDefaults.FPS)
-        event_return = eventHandler.handle_events(pygame.event.get())
-        if event_return == gameDefaults.BREAK:
-            run = False
+    eventhandler = EventHandler()
+    game.playing = True
+    while game.playing:
+        game.mainFrame()
+        clock.tick(game.gameDefaults.FPS)
+        eventhandler.handle_events(pygame.event.get(), game)
+        if not game.playing:
             pygame.quit()
             break
-        draw_window()
+        game.drawWindow()
 
 
 if __name__ == '__main__':
