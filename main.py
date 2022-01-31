@@ -22,8 +22,8 @@ class Game:
     def drawWindow(self):
         self.mainWindow.WIN.fill(self.gameDefaults.BGCOLOR)#WIN.blit(self.mainWindow.SPACE, (0, 0))
         self.drawGrid()
+        #self.fillSquare(4, 8)
         pygame.display.flip()  # Can use pygame.display.update()
-
 
     def drawGrid(self):
         for grid_x in range(self.gameDefaults.TILES_X + 1):
@@ -35,9 +35,14 @@ class Game:
             self.drawLine((self.gameDefaults.MARGIN, y), (self.gameDefaults.WIDTH - self.gameDefaults.MARGIN, y))
 
     def drawLine(self, point1, point2):
-        pygame.draw.line(self.mainWindow.WIN, self.gameDefaults.WHITE, point1, point2,
+        pygame.draw.line(self.mainWindow.WIN, self.gameDefaults.GREY, point1, point2,
                          width=self.gameDefaults.GRIDWIDTH)
 
+    def fillSquare(self, x, y):
+        left = x * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN
+        top = y * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN
+        rect = pygame.Rect(left, top, self.gameDefaults.TILESIZE, self.gameDefaults.TILESIZE)
+        pygame.draw.rect(self.mainWindow.WIN, self.gameDefaults.YELLOW, rect)
 
 
 def main():
@@ -48,6 +53,7 @@ def main():
     while game.playing:
         game.mainFrame()
         clock.tick(game.gameDefaults.FPS)
+
         eventhandler.handle_events(pygame.event.get(), game)
         if not game.playing:
             pygame.quit()

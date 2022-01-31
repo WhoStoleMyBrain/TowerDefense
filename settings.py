@@ -14,6 +14,7 @@ class GameDefaults:
         self.HEIGHT = self.TILESIZE * self.TILES_Y + 2 * self.MARGIN
         self.BREAK = -1
         self.WHITE = (255, 255, 255)
+        self.GREY = (220, 220, 220)
         self.BLACK = (0, 0, 0)
         self.RED = (255, 0, 0)
         self.YELLOW = (255, 255, 0)
