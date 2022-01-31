@@ -15,6 +15,7 @@ class Game:
         self.playing = False
         self.clock = pygame.time.Clock()
         self.mainWindow = Window()
+        self.squares = [(4, 8)]
 
     def mainFrame(self):
         pass
@@ -22,7 +23,8 @@ class Game:
     def drawWindow(self):
         self.mainWindow.WIN.fill(self.gameDefaults.BGCOLOR)#WIN.blit(self.mainWindow.SPACE, (0, 0))
         self.drawGrid()
-        #self.fillSquare(4, 8)
+        for square in self.squares:
+            self.fillSquare(square[0], square[1])
         pygame.display.flip()  # Can use pygame.display.update()
 
     def drawGrid(self):
@@ -38,11 +40,17 @@ class Game:
         pygame.draw.line(self.mainWindow.WIN, self.gameDefaults.GREY, point1, point2,
                          width=self.gameDefaults.GRIDWIDTH)
 
-    def fillSquare(self, x, y):
-        left = x * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN
-        top = y * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN
-        rect = pygame.Rect(left, top, self.gameDefaults.TILESIZE, self.gameDefaults.TILESIZE)
-        pygame.draw.rect(self.mainWindow.WIN, self.gameDefaults.YELLOW, rect)
+    def transformKoordinatesToSquares(self, x, y):
+        square_x = (x - self.gameDefaults.MARGIN) // self.gameDefaults.TILESIZE
+        square_y = (y - self.gameDefaults.MARGIN) // self.gameDefaults.TILESIZE
+        return square_x, square_y
+
+    def fillSquare(self, x, y, color=(255, 255, 0)):
+        left = x * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN + self.gameDefaults.GRIDWIDTH
+        top = y * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN + self.gameDefaults.GRIDWIDTH
+        rect = pygame.Rect(left, top, self.gameDefaults.TILESIZE - self.gameDefaults.GRIDWIDTH,
+                           self.gameDefaults.TILESIZE - self.gameDefaults.GRIDWIDTH)
+        pygame.draw.rect(self.mainWindow.WIN, color, rect)
 
 
 def main():
