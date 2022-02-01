@@ -24,11 +24,9 @@ class Game:
     def drawWindow(self):
         self.mainWindow.WIN.fill(self.gameDefaults.BGCOLOR)#WIN.blit(self.mainWindow.SPACE, (0, 0))
         self.drawGrid()
-        for square in self.squares:
-            self.fillSquare(square[0], square[1])
         self.Towers.draw(self.mainWindow.WIN)
         self.Towers.update()
-        pygame.display.flip()  # Can use pygame.display.update()
+        pygame.display.flip()  # Can use pygame.display.update(), which can update single elements of the display
 
     def drawGrid(self):
         for grid_x in range(self.gameDefaults.TILES_X + 1):
@@ -47,6 +45,11 @@ class Game:
         square_x = (x - self.gameDefaults.MARGIN) // self.gameDefaults.TILESIZE
         square_y = (y - self.gameDefaults.MARGIN) // self.gameDefaults.TILESIZE
         return square_x, square_y
+
+    def transformSquaresToCoordinates(self, position_square):
+        x = position_square[0] * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN + self.gameDefaults.GRIDWIDTH
+        y = position_square[1] * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN + self.gameDefaults.GRIDWIDTH
+        return x, y
 
     def fillSquare(self, x, y, color=(255, 255, 0)):
         left = x * self.gameDefaults.TILESIZE + self.gameDefaults.MARGIN + self.gameDefaults.GRIDWIDTH

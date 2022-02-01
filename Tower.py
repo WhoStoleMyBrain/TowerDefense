@@ -53,14 +53,16 @@ class ArrowTower(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load(picture_path), size)
         self.position = position
         self.rect = self.image.get_rect()
+        self.rect.topleft = self.position
         self.sound = pygame.mixer.Sound(sound_path)
 
     def place(self, tower_group):
-        if len(pygame.sprite.spritecollide(self, tower_group, False)) <= 0:
+        collided_sprites = pygame.sprite.spritecollide(self, tower_group, False)
+        if len(collided_sprites) <= 0:
             tower_group.add(self)
         else:
-            pass
+            tower_group.remove(collided_sprites[0])
 
     def update(self):
-        self.rect.center = self.position
+        self.rect.topleft = self.position
 
