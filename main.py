@@ -16,6 +16,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.mainWindow = Window()
         self.squares = [(4, 8)]
+        self.Towers = pygame.sprite.Group()
 
     def mainFrame(self):
         pass
@@ -25,6 +26,8 @@ class Game:
         self.drawGrid()
         for square in self.squares:
             self.fillSquare(square[0], square[1])
+        self.Towers.draw(self.mainWindow.WIN)
+        self.Towers.update()
         pygame.display.flip()  # Can use pygame.display.update()
 
     def drawGrid(self):
