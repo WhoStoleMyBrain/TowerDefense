@@ -48,9 +48,9 @@ class ArrowTower(Tower):
 
 class ArrowTower(pygame.sprite.Sprite):
 
-    def __init__(self, picture_path, sound_path, position):
+    def __init__(self, picture_path, sound_path, position, size):
         super().__init__()
-        self.image = pygame.image.load(picture_path)
+        self.image = pygame.transform.scale(pygame.image.load(picture_path), size)
         self.position = position
         self.rect = self.image.get_rect()
         self.sound = pygame.mixer.Sound(sound_path)

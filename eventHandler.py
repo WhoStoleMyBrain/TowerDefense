@@ -3,6 +3,7 @@ from settings import GameDefaults
 from Tower import ArrowTower
 import os
 
+
 class EventHandler:
     def __init__(self):
         self.gameDefaults = GameDefaults()
@@ -15,7 +16,8 @@ class EventHandler:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 arrow_tower = ArrowTower(os.path.join('Assets', 'axeDouble2.png'),
-                                         os.path.join('Assets', 'Grenade+1.mp3'), (x, y))
+                                         os.path.join('Assets', 'Grenade+1.mp3'), (x, y),
+                                         (game.gameDefaults.TILESIZE, game.gameDefaults.TILESIZE) )
                 arrow_tower.place(game.Towers)
                 square_x, square_y = game.transformKoordinatesToSquares(x, y)
                 """
